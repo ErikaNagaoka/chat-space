@@ -43,3 +43,5 @@
 ### Association
 - belongs_to :group
 - belongs_to :user
+- has_many :groups_users
+- has_many :users, through: :groups_users
