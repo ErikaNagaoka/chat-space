@@ -5,19 +5,16 @@
         = current_user.name
       .left-header__username-list__icon-list
         .left-header__username-list__edit
-          = link_to "#" , class: "icon-edit"do
+          = link_to new_group_path , class: "icon-edit"do
             = icon('far', 'edit')
         .left-header__username-list__new
           = link_to edit_user_path(current_user) ,class: "icon-new"do
             = icon('fas', 'cog')
   .group-list
-    .group
-      .groupname
-        techcamp
-      .group-message
-        メッセージはまだありません
-    .group
-      .groupname
-        techcamp
-      .group-message
-        メッセージはまだありません
+    - current_user.groups.each do |group|
+      .group
+        = link_to '#' do
+          .groupname
+            = group.name
+          .group-message
+            メッセージはまだありません
