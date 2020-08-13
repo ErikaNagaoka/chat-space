@@ -2,33 +2,22 @@
   .group-info
     .group-info__list
       .group-info__list__groupname
-        test
+        = @group.name
       .group-info__list__member
-        Member:erika
+        Member：
+        %ul
+        - @group.users.each do |user|
+          %li= user.name
     .group-info__edit
-      = link_to "#",class: "edit__btn" do
+      = link_to edit_group_path(current_user),class: "edit__btn" do
         Edit
   .message-list
-    .message-list__userinfo
-      .message-list__userinfo__username
-        erika
-      .message-list__userinfo__time
-        2020/01/01(Mon) 00:00:00
-    .message-list__text
-      HELLO!
-    .message-list__userinfo
-      .message-list__userinfo__username
-        erika
-      .message-list__userinfo__time
-        2020/01/01(Mon) 00:00:00
-    .message-list__text
-      HELLO!
+    = render partial: 'message', collection: @messages
   .message-form
-    .message-form__input
-      =form_with(model: @message, local: true)  do |form|
-        =form.text_field :message, placeholder: "type a message", type:"text",class: "message-form__input"
-      %label{class: "message-form__input__image"}
-        = icon('far', 'image')
-        %input{type: "file"}
-    .message-form__send
-      Send
+    = form_with model: [@group, @message], class: 'message-form', local: true do |f|
+      .message-form__input
+        = f.text_field :content, class: 'message-form__input', placeholder: 'type a message'
+        = f.label :image, class: 'message-form__input__image' do
+          = icon('far', 'image', class: 'Form__icon')
+          = f.file_field :image, class: 'Hidden'
+      = f.submit 'Send', class: 'message-form__send'
